@@ -5,15 +5,17 @@
   2. [Variables](#variables)
   3. [Functions](#functions)
   4. [Objects and Data Structures](#objects-and-data-structures)
-  5. [Classes](#classes)
+  5. [Error Handling](#error-handling)
+  6. [Boundary](#boundary)
+  7. [Classes](#classes)
      1. [S: Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
      2. [O: Open/Closed Principle (OCP)](#openclosed-principle-ocp)
      3. [L: Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
      4. [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      5. [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
-  6. [Don't repeat yourself (DRY)](#dont-repeat-yourself-dry)
+  8. [Don't repeat yourself (DRY)](#dont-repeat-yourself-dry)
 
-## Introduction
+## **Introduction**
 
 Software engineering principles, from Robert C. Martin's book
 [*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
@@ -603,9 +605,90 @@ print(person.name_as_first_and_last)  # ['Ryan', 'McDermott']
 
 ## **Objects and Data Structures**
 
+There's a reason that we keep our variables private. We don't want anyone else to depend on them. We want to keep the freedom to change their type or implementation on a whim or an impulse.
+
+Hiding implementation is about abstraction! A class does not simply push its variables out through getter and setters. Rather it exposes abstract interfaces that allow its users to manipulate the essence of the data, without having to know its implementation.
+
+**Bad:**
+
+```python
+
+class Point 
+    x: double
+    y: double
+```
+
+**Good:**
+
+```python
+
+class Point 
+    
+    def getX(self) -> double:
+        return 
+    
+    def getY(self) -> double:
+        return
+
+    def setCartesian(self, double x, double y):
+        return
+```
+
+The difference between the two is in the second example, there is no way you can tell whether the implementation is in rectangular or polar coordinates.
+
+### **Data/Object Anti-Symmetry**
+
 *Coming soon*
 
 **[⬆ back to top](#table-of-contents)**
+
+## **Error Handling**
+
+I think any discussion about error handling should include mention of the things we do that invite errors.
+
+### Dont Return Null
+
+```python
+Employees = getEmployees()
+if Employees != Null:
+    for e in Employees:
+        totalPay += e.getPay()
+```
+By changing getEmployees to return empty list we can clean up the code
+
+
+```python
+Employees = getEmployees()
+    for e in Employees:
+        totalPay += e.getPay()
+```
+
+
+
+*Coming soon*
+
+**[⬆ back to top](#table-of-contents)**
+
+## **Boundary**
+
+
+Code at boundaries needs clear seperation and test that define expectations. We should avoid letting too much of our code know about the third-party particulars. It's better to depend on something you control than something you don't control, lest it end up controlling you.
+
+### Using Third Pary Code
+
+```python
+class Sensors 
+    def __init__(self, name):  
+        sensors = new HashMap()
+
+    def getById(self, id):
+        return sensors.get(id)
+```
+
+The interface at the boundary (Map) is hidden. It is able to evolve with very little impact on the rest of the application. The use of generics is no longer a big issue because the casting and type management is handled inside the Sensor class. 
+
+
+
 
 ## **Classes**
 
