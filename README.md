@@ -4,6 +4,7 @@
   1. [Introduction](#introduction)
   2. [Variables](#variables)
   3. [Functions](#functions)
+  4. [Comments](#comments)
   4. [Objects and Data Structures](#objects-and-data-structures)
   5. [Error Handling](#error-handling)
   6. [Boundary](#boundary)
@@ -13,7 +14,8 @@
      3. [L: Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
      4. [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      5. [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
-  8. [Don't repeat yourself (DRY)](#dont-repeat-yourself-dry)
+  8. [System](#system)
+  9. [Don't repeat yourself (DRY)](#dont-repeat-yourself-dry)
 
 ## **Introduction**
 
@@ -25,6 +27,14 @@ readable, reusable, and refactorable software in Python.
 Not every principle herein has to be strictly followed, and even fewer will be universally 
 agreed upon. These are guidelines and nothing more, but they are ones codified over many 
 years of collective experience by the authors of *Clean Code*.
+
+The goal is to have well-designed software, here is Kent Beck's four rules of *Simple Design*:  
+1. Runs all the tests
+2. Contains no duplication
+3. Expresses the intent of hte progammer
+4. Minimizes the number of classes and methods  
+
+The rules are given in order of importance.
 
 Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
 
@@ -356,9 +366,7 @@ create_menu(
 ### Functions should do one thing
 This is by far the most important rule in software engineering. When functions do more 
 than one thing, they are harder to compose, test, and reason about. When you can isolate 
-a function to just one action, they can be refactored easily and your code will read much 
-cleaner. If you take nothing else away from this guide other than this, you'll be ahead 
-of many developers.
+a function to just one action, they can be refactored easily and your code will read much cleaner. If you take nothing else away from this guide other than this, you'll be ahead of many developers.
 
 **Bad:**
 ```python
@@ -433,6 +441,8 @@ message.send()
 ```
 
 **[⬆ back to top](#table-of-contents)**
+
+Another example is functions should either do something or answer something, but not both. Either your function should change the state of an object, or it should return some information about that object.
 
 ### Functions should only be one level of abstraction
 
@@ -603,6 +613,10 @@ print(person.name_as_first_and_last)  # ['Ryan', 'McDermott']
 
 **[⬆ back to top](#table-of-contents)**
 
+## **Comments**
+
+Whenever you feel like you need to write a comment, your code is probably not expressive enough or you're probably not naming a variable well clear enough.
+
 ## **Objects and Data Structures**
 
 There's a reason that we keep our variables private. We don't want anyone else to depend on them. We want to keep the freedom to change their type or implementation on a whim or an impulse.
@@ -692,19 +706,79 @@ The interface at the boundary (Map) is hidden. It is able to evolve with very li
 
 ## **Classes**
 
+The first rule of classes is that they should be small. The second rule of classes is that they should be smaller than that. With functions we measure size by counting physical lines. With classes we use a different measure. We count responsibilities. This brings us to first priciple of class implementation:
+
 ### **Single Responsibility Principle (SRP)**
-### **Open/Closed Principle (OCP)**
-### **Liskov Substitution Principle (LSP)**
-### **Interface Segregation Principle (ISP)**
-### **Dependency Inversion Principle (DIP)**
+
+The Single Responsibility Principle (SRP) states that a class or module should have one, and only one, reason to change. This principle gives us both a definition of responsibility and a guideline for class sizes. Classes should have one responsibility - one reason to change.
+
+Many developers fear that a large number of small, single-purpose classes make it more difficult to understand the bigger picture. However, a system with many small classes has no more moving parts than a system with a few large classes. So the question is do you want your tools organized into toolboxes with many small drawers each containing well-defined and well-labeled components ? Or do you want a few drawers that you just toss everything into ? 
+
+One of the metrics to view if your class follows the SRP principle is cohesion. Classes should have small number of variables. Each of the methods of a class should manipulate one or more of those variables.
+
+From the below implementation of Stack. This is a very cohesive class. Of the three methods only size() fails to use both the variables.
+
+```python
+class Stack
+    def __init__(self, name):  
+        topOfStack: int
+        elements: List[int]
+
+    def size(self):
+        return self.topOfStack
+    
+    def push(self, element):
+        topOfStack += 1
+        elements.append(element)
+
+    def pop(self):
+        if topOfStack == 0:
+            return None
+        return elements.pop()
+```
+
+Maintaining Cohesion Results in Many Small Classes
+
+One of the most important decisions regarding responsiblities is where to put code. For example, where should PI constant go ? Should it be in the Math class ? Perhaps it belongs in the Triogonometry class ? Or maybe in the Circle class ? 
+
+The principle of least surprise comes into play here. Code should be placed where a reader would naturally expect it to be. Ask yourself this question, where will you want this code to be found ? 
 
 *Coming soon*
 
 **[⬆ back to top](#table-of-contents)**
+
+
+### **Open/Closed Principle (OCP)**
+
+Classes should be open for extension but closed for modification. In an ideal system, we incorporate new features by extending the system, not by making modifications to existing code.
+
+Here's a [Example](https://www.stevebrownlee.com/open-closed-principle-practical-example/) of Open/Closed Principle.
+
+```python
+class SQL 
+    
+```
+
+
+### **Liskov Substitution Principle (LSP)**
+### **Interface Segregation Principle (ISP)**
+### **Dependency Inversion Principle (DIP)**
+
+
+
+*Coming soon*
+
+**[⬆ back to top](#table-of-contents)**
+
+## **System**
+
+Seperating Constructing a System from Using it
+
+
+
 
 ## **Don't repeat yourself (DRY)**
 
 *Coming soon*
 
 **[⬆ back to top](#table-of-contents)**
-
